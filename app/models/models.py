@@ -10,3 +10,11 @@ class User(BaseModel):
 
 class IsAdult(User):
     is_adult: bool = False
+
+
+class Item(BaseModel):
+    name: str
+    description: str | None = None
+    price: float
+    tax: float | None = None
+    tags: list[str] = []
