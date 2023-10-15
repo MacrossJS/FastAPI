@@ -8,6 +8,11 @@ class User(BaseModel):
     user_info: str | None = None
 
 
+class UserAuth(BaseModel):
+    username: str
+    password: str
+
+
 class IsAdult(User):
     is_adult: bool = False
 
