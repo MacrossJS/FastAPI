@@ -8,7 +8,7 @@ app = FastAPI()
 
 # URL для PostgreSQL (измените его под свою БД)
 DATABASE_URL = "postgresql://user:password@localhost/dbname"
-
+DATABASE_URL = "postgresql://postgres:226ffoGFV226!@localhost/postgres"
 database = Database(DATABASE_URL)
 
 
@@ -39,7 +39,7 @@ async def shutdown_database():
 # создание роута для создания юзеров
 @app.post("/users/", response_model=UserReturn)
 async def create_user(user: UserCreate):
-    query = "INSERT INTO users (username, email) VALUES (:username, :email) RETURNING id"
+    query = "INSERT INTO fastapi_users (username, email) VALUES (:username, :email) RETURNING id"
     values = {"username": user.username, "email": user.email}
     try:
         user_id = await database.execute(query=query, values=values)
@@ -51,7 +51,7 @@ async def create_user(user: UserCreate):
 # маршрут для получения информации о юзере по ID
 @app.get("/user/{user_id}", response_model=UserReturn)
 async def get_user(user_id: int):
-    query = "SELECT * FROM users WHERE id = :user_id"
+    query = "SELECT * FROM fastapi_users WHERE id = :user_id"
     values = {"user_id": user_id}
     try:
         result = await database.fetch_one(query=query, values=values)
