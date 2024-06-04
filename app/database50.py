@@ -21,9 +21,9 @@ class TaskORM(Model):
 
 async def create_tables():
     async with engine.begin() as conn:
-        await conn.run_sync(Model.metedata.create_all)
+        await conn.run_sync(Model.metadata.create_all)
 
 
 async def delete_tables():
     async with engine.begin() as conn:
-        await conn.run_sync(Model.metedata.drop_all)
+        await conn.run_sync(Model.metadata.drop_all)

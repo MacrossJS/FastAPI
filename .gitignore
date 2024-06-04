@@ -4,3 +4,4 @@ venv/
 .mypy_cache/
 .env
 desktop.ini
+taska.db
