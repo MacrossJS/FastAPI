@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends
-from app.repository import TaskRepository
-from app.schemas import STaskAdd, STaskId, STask
+from repository import TaskRepository
+from schemas import STaskAdd, STaskId, STask
 
 router = APIRouter(prefix="/tasks", tags=["Задачи"])
 

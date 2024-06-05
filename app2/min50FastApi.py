@@ -20,5 +20,5 @@ app.include_router(tasks_router)
 tasks = []
 
 if __name__ == "__main__":
-    uvicorn.run("min50FastApi:app", host='127.0.0.1', port=8066, reload=True, workers=3)
+    uvicorn.run("min50FastApi:app", host='0.0.0.0', port=8066, reload=True, workers=3)
     # uvicorn.run("min50FastApi:app", host='127.0.0.1', port=8000, reload=True)
