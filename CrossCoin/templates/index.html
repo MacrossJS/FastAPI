@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CrossCoin Clicker</title>
+</head>
+<body>
+    <h1>CrossCoin Clicker</h1>
+    <form id="collectForm">
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        <button type="submit">Collect Coins</button>
+    </form>
+    <p>Coins: <span id="coinCount">undefined</span></p>
+    <button id="leaderboardButton">Leaderboard</button>
+    <div id="leaderboard"></div>
+
+    <script>
+        document.getElementById('collectForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const response = await fetch('/collect/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'username': username
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById('coinCount').textContent = data.coins;
+        });
+
+        document.getElementById('leaderboardButton').addEventListener('click', async function() {
+            const response = await fetch('/leaderboard/');
+            const data = await response.json();
+
+            const leaderboard = document.getElementById('leaderboard');
+            leaderboard.innerHTML = '';
+            data.forEach(user => {
+                const userElement = document.createElement('p');
+                userElement.textContent = `${user.username}: ${user.coins} coins`;
+                leaderboard.appendChild(userElement);
+            });
+        });
+    </script>
+</body>
+</html>
