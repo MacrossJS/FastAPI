@@ -2,7 +2,7 @@ from aiohttp import ClientSession
 
 
 class HTTPClient:
-    def __int__(self, base_url: str, api_key: str):
+    def __init__(self, base_url: str, api_key: str):
         self._session = ClientSession(
             base_url=base_url,
             headers={
@@ -14,7 +14,7 @@ class HTTPClient:
 class CMCHTTPClient(HTTPClient):
     async def get_listings(self):
         async with self._session.get(
-                "/v1/cryptocurrency/listings/latest") as resp:
+                "/v1//cryptocurrency/listings/latest") as resp:
             result = await resp.json()
             return result["data"]
 
