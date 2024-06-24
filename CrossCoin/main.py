@@ -33,7 +33,7 @@ def get_db():
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index_A.html", {"request": request})
 
 
 @app.post("/collect/", response_model=schemas.User)
