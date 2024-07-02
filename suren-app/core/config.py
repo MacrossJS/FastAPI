@@ -18,6 +18,15 @@ class DatabaseConfig(BaseModel):
     pool_size: int = 10
     max_overflow: int = 10
 
+    naming_conventions: dict[str, str] = {
+        "ix": "ix_%(column_0_label)s",
+        "uq": "uq_%(table_name)s_%(column_0_name)s",
+        "ix": "ix_%(column_0_label)s",
+        "ix": "ix_%(column_0_label)s",
+        "ix": "ix_%(column_0_label)s",
+        "ix": "ix_%(column_0_label)s",
+    }
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(

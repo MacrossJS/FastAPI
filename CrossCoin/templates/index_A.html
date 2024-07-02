@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CrossCoin Clicker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,800');
+        body{
+            background-color: #1E1D1C;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .cross-container {
+            width: 100%;
+            display: grid;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            text-align: center;
+        }
+
+        #coinButton {
+            position: relative;
+            background-image: linear-gradient(#d71300 0%, #b11303 80%, #92160a 100%);
+            box-shadow: 4px 4px .4em black, -1px -1px .6em #555555;
+            width: 150px;
+            height: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: .5rem;
+            padding-top: .5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            border-radius: 5rem;
+            color: rgb(255, 255, 255);
+            border: 8px solid #1E1D1C;
+            box-sizing: border-box;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        #leaderboardButton {
+            position: relative;
+            width: 300px;
+            background-color: #1E1D1C;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 4px 4px .4em black, -1px -1px .6em #555555;
+            padding-bottom: .5rem;
+            padding-top: .5rem;
+            padding-left: 4rem;
+            padding-right: 4rem;
+            border-radius: .5rem;
+            color: rgb(255, 255, 255);
+            border: 0 solid #e5e7eb;
+            box-sizing: border-box;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #username {
+            position: relative;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+        <form id="collectForm">
+            <div class="cross-container">
+                <h1>CrossCoin Clicker</h1>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="cross-container"><button type="submit" id="coinButton">COLLECT</button>
+                <p>Coins: <span id="coinCount">undefined</span></p>
+            </div>
+        </form>
+        <div class="cross-container"><button id="leaderboardButton">Leaderboard</button>
+            <div id="leaderboard"></div>
+        </div>
+
+    <script>
+        document.getElementById('collectForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const response = await fetch('/collect/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'username': username
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById('coinCount').textContent = data.coins;
+        });
+
+        document.getElementById('leaderboardButton').addEventListener('click', async function () {
+            const response = await fetch('/leaderboard/');
+            const data = await response.json();
+
+            const leaderboard = document.getElementById('leaderboard');
+            leaderboard.innerHTML = '';
+            data.forEach(user => {
+                const userElement = document.createElement('p');
+                userElement.textContent = `${user.username}: ${user.coins} coins`;
+                leaderboard.appendChild(userElement);
+            });
+        });
+    </script>
+</body>
+
+</html>
